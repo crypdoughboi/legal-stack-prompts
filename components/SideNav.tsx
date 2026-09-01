@@ -82,29 +82,28 @@ export function SideNav({
 
           <hr className="side-nav-divider" />
 
-          <label className="side-nav-field">
-            <span className="side-nav-eyebrow">
-              Practice area <span className="side-nav-optional">(optional)</span>
-            </span>
-            <select
-              aria-label="Practice area"
-              value={selectedPractice}
-              onChange={(event) => onSelectPractice(event.target.value)}
-            >
-              <option value="">All practice areas</option>
-              {practices.map((practice) => (
-                <option key={practice.id} value={practice.id}>
-                  {practice.label}
-                </option>
-              ))}
-            </select>
-          </label>
+          <div className="side-nav-field-group">
+            <label className="side-nav-field">
+              <span className="side-nav-eyebrow">
+                Practice area <span className="side-nav-optional">(optional)</span>
+              </span>
+              <select
+                aria-label="Practice area"
+                value={selectedPractice}
+                onChange={(event) => onSelectPractice(event.target.value)}
+              >
+                <option value="">All practice areas</option>
+                {practices.map((practice) => (
+                  <option key={practice.id} value={practice.id}>
+                    {practice.label}
+                  </option>
+                ))}
+              </select>
+            </label>
 
-          {selectedPractice ? (
-            topics.length > 0 && (
-              <div className="side-nav-topics">
-                <span className="side-nav-eyebrow">Subcategories in {practiceLabel(selectedPractice)}</span>
-                <div className="side-nav-topic-list">
+            {selectedPractice ? (
+              topics.length > 0 && (
+                <div className="side-nav-subtopics">
                   <button
                     className={selectedTopic === "" ? "side-nav-topic active" : "side-nav-topic"}
                     onClick={() => onSelectTopic("")}
@@ -122,11 +121,11 @@ export function SideNav({
                     </button>
                   ))}
                 </div>
-              </div>
-            )
-          ) : (
-            <p className="side-nav-hint">Each practice area breaks down further into its own subcategories once selected.</p>
-          )}
+              )
+            ) : (
+              <p className="side-nav-hint">Narrows further into that practice's own subcategories once picked.</p>
+            )}
+          </div>
 
           {hasFilter && (
             <button className="side-nav-clear" onClick={onClearAll}>

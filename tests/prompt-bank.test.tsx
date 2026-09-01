@@ -120,10 +120,9 @@ describe("PromptBank", () => {
     render(<PromptBank />);
     const nav = sideNav();
 
-    expect(screen.getByText("Each practice area breaks down further into its own subcategories once selected.")).toBeInTheDocument();
+    expect(screen.getByText("Narrows further into that practice's own subcategories once picked.")).toBeInTheDocument();
 
     await user.selectOptions(within(nav).getByLabelText("Practice area"), "Real Estate");
-    expect(within(nav).getByText("Subcategories in Real Estate")).toBeInTheDocument();
     const topic = within(nav).getByRole("button", { name: /Leasing, estoppels & sale-leasebacks/ });
     expect(topic).toHaveTextContent("3");
 

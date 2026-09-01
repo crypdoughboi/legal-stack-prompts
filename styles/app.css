@@ -239,6 +239,10 @@ a:hover {
   background: var(--nav-border);
   margin: 0;
 }
+.side-nav-field-group {
+  display: grid;
+  gap: 10px;
+}
 .side-nav-field {
   display: grid;
   gap: 8px;
@@ -265,29 +269,30 @@ a:hover {
 }
 .side-nav-hint {
   margin: 0;
-  color: var(--nav-ink-soft);
-  font-size: 13px;
-  line-height: 1.55;
+  color: var(--nav-muted);
+  font-size: 12px;
+  line-height: 1.5;
 }
-.side-nav-topics {
-  display: grid;
-  gap: 8px;
-}
-.side-nav-topic-list {
+/* Nested one level under the practice-area select — a quiet, secondary
+   refinement, not its own nav section. */
+.side-nav-subtopics {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 1px;
+  margin-left: 4px;
+  padding-left: 11px;
+  border-left: 2px solid var(--nav-border);
 }
 .side-nav-topic {
   text-align: left;
   background: none;
   border: 0;
-  border-radius: 7px;
+  border-radius: 6px;
   cursor: pointer;
-  padding: 9px 10px;
-  font-size: 13.5px;
-  font-weight: 500;
-  color: var(--nav-ink-soft);
+  padding: 6px 8px;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--nav-muted);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -296,17 +301,17 @@ a:hover {
 }
 .side-nav-topic:hover {
   background: var(--nav-bg-hover);
-  color: #fff;
+  color: var(--nav-ink-soft);
 }
 .side-nav-topic.active {
   background: var(--nav-bg-active);
-  color: #fff;
-  font-weight: 700;
+  color: var(--nav-ink-soft);
+  font-weight: 600;
 }
 .side-nav-topic-count {
   color: var(--nav-muted);
-  font-size: 11.5px;
-  font-weight: 600;
+  font-size: 10.5px;
+  font-weight: 500;
   flex: none;
 }
 .side-nav-clear {
