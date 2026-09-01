@@ -16,150 +16,204 @@ function setup() {
 
 beforeEach(() => {
   vi.restoreAllMocks();
+  localStorage.clear();
 });
 
 describe("PromptBank", () => {
-  it("renders the landing view", () => {
+  it("renders the browse-first home", () => {
     setup();
     render(<PromptBank />);
-    expect(screen.getByRole("heading", { name: "What are you working on?" })).toBeInTheDocument();
-    expect(screen.getByText("65 prompts · 8 categories")).toBeInTheDocument();
-    expect(
-      screen.getByPlaceholderText("Search 65 transactional prompts"),
-    ).toBeInTheDocument();
-    expect(screen.getByText("Built by Josh Benzadon")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Every prompt your practice needs." })).toBeInTheDocument();
+    expect(screen.getByText("65 prompts · 8 practice areas")).toBeInTheDocument();
+    expect(screen.getByPlaceholderText("Search prompts")).toBeInTheDocument();
+    expect(screen.getByText("All prompts by task")).toBeInTheDocument();
+    expect(screen.getByText(/Built by/)).toBeInTheDocument();
   });
 
-  it("opens and closes a practice menu from its chip", async () => {
+  it("browses by task, which groups the list by practice area", async () => {
     const { user } = setup();
     render(<PromptBank />);
-    const chip = screen.getByRole("button", { name: /Corporate \/ M&A/ });
 
-    await user.click(chip);
-    expect(chip).toHaveAttribute("aria-expanded", "true");
-    expect(screen.getByRole("dialog", { name: "Corporate / M&A prompts" })).toBeInTheDocument();
-    expect(screen.getByText("11 practical starting points")).toBeInTheDocument();
-    expect(screen.getByText("Acquisition agreements & diligence")).toBeInTheDocument();
+    await user.selectOptions(screen.getByLabelText("What do you need to do?"), "Review a document");
+    expect(screen.getByText("By practice area")).toBeInTheDocument();
 
-    await user.click(chip);
-    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    const group = screen.getByRole("button", { name: /^Corporate \/ M&A/ });
+    expect(group).toHaveAttribute("aria-expanded", "true");
+    expect(screen.getByText("M&A diligence risk matrix")).toBeInTheDocument();
   });
 
-  it("closes the open menu on an outside click", async () => {
+  it("opens a prompt from the browse list into the guided workspace", async () => {
     const { user } = setup();
     render(<PromptBank />);
-    await user.click(screen.getByRole("button", { name: /Finance/ }));
-    expect(screen.getByRole("dialog")).toBeInTheDocument();
 
-    await user.click(document.body);
-    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
-  });
-
-  it("filters prompts as you search and clears the query", async () => {
-    const { user } = setup();
-    render(<PromptBank />);
-    const search = screen.getByLabelText("Search the prompt bank");
-
-    await user.type(search, "estoppel");
-    const results = screen.getByRole("listbox");
-    expect(within(results).getByText("Estoppel and SNDA review")).toBeInTheDocument();
-
-    await user.clear(search);
-    await user.type(search, "zzzzzz");
-    expect(screen.getByText(/No prompts match/)).toBeInTheDocument();
-
-    await user.click(screen.getByRole("button", { name: "Clear search" }));
-    expect(screen.queryByRole("listbox")).not.toBeInTheDocument();
-    expect(search).toHaveValue("");
-  });
-
-  it("selects a prompt and shows the guided builder", async () => {
-    const { user } = setup();
-    render(<PromptBank />);
-    await user.click(screen.getByRole("button", { name: /Corporate \/ M&A/ }));
+    await user.selectOptions(screen.getByLabelText("What do you need to do?"), "Review a document");
     await user.click(screen.getByText("M&A diligence risk matrix"));
 
     expect(screen.getByRole("heading", { name: "M&A diligence risk matrix" })).toBeInTheDocument();
-    expect(screen.getByText("Add the matter context")).toBeInTheDocument();
-    expect(screen.getByText("0/10 filled")).toBeInTheDocument();
-    // Landing-only sections are hidden once a prompt is selected.
-    expect(screen.queryByRole("heading", { name: "What are you working on?" })).not.toBeInTheDocument();
-    expect(screen.queryByText("Built by Josh Benzadon")).not.toBeInTheDocument();
+    expect(screen.getByText("Give the AI the facts")).toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "Every prompt your practice needs." })).not.toBeInTheDocument();
 
-    const generated = screen.getByLabelText("Generated prompt") as HTMLTextAreaElement;
-    expect(generated.value).toContain("[CLIENT OR PRINCIPAL PARTY]");
-    expect(generated.value).toContain("MATTER-SPECIFIC TASK");
+    const generated = screen.getByLabelText("Your prompt — editable") as HTMLTextAreaElement;
+    expect(generated.value).toContain("MATTER: [describe the matter or transaction]");
+    expect(generated.value).toContain("TASK");
   });
 
-  it("rewrites the generated prompt as matter details are filled in", async () => {
+  it("collapsing an expanded group hides its prompts again", async () => {
     const { user } = setup();
     render(<PromptBank />);
-    await user.click(screen.getByRole("button", { name: /Real Estate/ }));
-    await user.click(screen.getByText("Real estate closing checklist"));
+
+    await user.selectOptions(screen.getByLabelText("What do you need to do?"), "Review a document");
+    const group = screen.getByRole("button", { name: /^Corporate \/ M&A/ });
+    expect(screen.getByText("M&A diligence risk matrix")).toBeInTheDocument();
+
+    await user.click(group);
+    expect(group).toHaveAttribute("aria-expanded", "false");
+    expect(screen.queryByText("M&A diligence risk matrix")).not.toBeInTheDocument();
+  });
+
+  it("returns to home from the workspace's back button", async () => {
+    const { user } = setup();
+    render(<PromptBank />);
+
+    await user.selectOptions(screen.getByLabelText("What do you need to do?"), "Review a document");
+    await user.click(screen.getByText("M&A diligence risk matrix"));
+
+    const back = screen.getByRole("button", { name: "← Start over" });
+    await user.click(back);
+    expect(screen.getByRole("heading", { name: "Every prompt your practice needs." })).toBeInTheDocument();
+  });
+
+  it("searches from the header and opens a result", async () => {
+    const { user } = setup();
+    render(<PromptBank />);
+
+    const search = screen.getByLabelText("Search prompts");
+    await user.type(search, "estoppel{Enter}");
+
+    expect(screen.getByRole("heading", { name: "“estoppel”" })).toBeInTheDocument();
+    const card = screen.getByRole("button", { name: /Estoppel and SNDA review/ });
+    await user.click(card);
+
+    expect(screen.getByRole("heading", { name: "Estoppel and SNDA review" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "← Back to results" })).toBeInTheDocument();
+  });
+
+  it("shows lead-task suggestions when a search comes up empty, and follows one", async () => {
+    const { user } = setup();
+    render(<PromptBank />);
+
+    const search = screen.getByLabelText("Search prompts");
+    await user.type(search, "zzzzzzz{Enter}");
+
+    expect(screen.getByText("Nothing matched “zzzzzzz”")).toBeInTheDocument();
+    const suggestion = screen.getByRole("button", { name: /Review a document/ });
+    await user.click(suggestion);
+
+    expect(screen.getByRole("heading", { name: "Review a document" })).toBeInTheDocument();
+    expect(screen.getByText("M&A diligence risk matrix")).toBeInTheDocument();
+  });
+
+  it("filters results by practice area with the filter chips", async () => {
+    const { user } = setup();
+    render(<PromptBank />);
+
+    await user.type(screen.getByLabelText("Search prompts"), "checklist{Enter}");
+    const chips = screen.getAllByRole("button", { name: /^(All|Corporate|Finance|Restructuring|Real Estate|Investment Funds|Review|Diligence|Deal)/ });
+    expect(chips.length).toBeGreaterThan(1);
+
+    const onePractice = chips[1];
+    const label = onePractice.textContent ?? "";
+    await user.click(onePractice);
+
+    const cards = screen.getAllByRole("button", { name: new RegExp("·") });
+    for (const card of cards) {
+      expect(within(card).getByText(new RegExp(label))).toBeInTheDocument();
+    }
+  });
+
+  it("rewrites the generated prompt as the three essentials are filled in", async () => {
+    const { user } = setup();
+    render(<PromptBank />);
+
+    await user.selectOptions(screen.getByLabelText("What do you need to do?"), "Review a document");
+    await user.click(screen.getByText("M&A diligence risk matrix"));
+
+    await user.type(screen.getByLabelText("What are you working on?"), "Acquisition of a software company");
+    await user.type(screen.getByLabelText("Who do we act for?"), "Buyer");
+
+    const generated = screen.getByLabelText("Your prompt — editable") as HTMLTextAreaElement;
+    expect(generated.value).toContain("MATTER: Acquisition of a software company");
+    expect(generated.value).toContain("WE ACT FOR: Buyer");
+  });
+
+  it("adds more context behind the disclosure toggle and counts it", async () => {
+    const { user } = setup();
+    render(<PromptBank />);
+
+    await user.selectOptions(screen.getByLabelText("What do you need to do?"), "Review a document");
+    await user.click(screen.getByText("M&A diligence risk matrix"));
+
+    expect(screen.queryByLabelText("Client or principal party")).not.toBeInTheDocument();
+    await user.click(screen.getByText("Add more context"));
 
     await user.type(screen.getByLabelText("Client or principal party"), "Acme Holdings");
-    await user.selectOptions(screen.getByLabelText("Our role"), "Buyer");
+    expect(screen.getByText("More context (1 added)")).toBeInTheDocument();
 
-    const generated = screen.getByLabelText("Generated prompt") as HTMLTextAreaElement;
+    const generated = screen.getByLabelText("Your prompt — editable") as HTMLTextAreaElement;
+    expect(generated.value).toContain("FURTHER CONTEXT");
     expect(generated.value).toContain("Client / principal party: Acme Holdings");
-    expect(generated.value).toContain("Our role: Buyer");
-    expect(screen.getByText("2/10 filled")).toBeInTheDocument();
+  });
 
-    await user.click(screen.getByRole("button", { name: "Clear details" }));
-    expect(generated.value).toContain("Client / principal party: [CLIENT OR PRINCIPAL PARTY]");
-    expect(screen.getByText("0/10 filled")).toBeInTheDocument();
+  it("flags missing facts as gaps until they are filled", async () => {
+    const { user } = setup();
+    render(<PromptBank />);
+
+    await user.selectOptions(screen.getByLabelText("What do you need to do?"), "Review a document");
+    await user.click(screen.getByText("M&A diligence risk matrix"));
+
+    expect(screen.getByText("Still missing — the AI will ask, or guess")).toBeInTheDocument();
+    expect(screen.getByText("The matter or transaction")).toBeInTheDocument();
+
+    await user.type(screen.getByLabelText("What are you working on?"), "Acquisition");
+    expect(screen.queryByText("The matter or transaction")).not.toBeInTheDocument();
   });
 
   it("copies the generated prompt to the clipboard", async () => {
     const { user, writeText } = setup();
     render(<PromptBank />);
-    await user.click(screen.getByRole("button", { name: /Investment Funds/ }));
-    await user.click(screen.getByText("LPA terms matrix"));
 
-    await user.click(screen.getByRole("button", { name: /Copy full prompt/ }));
+    await user.selectOptions(screen.getByLabelText("What do you need to do?"), "Review a document");
+    await user.click(screen.getByText("M&A diligence risk matrix"));
+
+    await user.click(screen.getByRole("button", { name: /Copy prompt/ }));
     expect(writeText).toHaveBeenCalledTimes(1);
-    expect(writeText.mock.calls[0][0]).toContain("MATTER-SPECIFIC TASK");
-    expect(await screen.findByText("Copied")).toBeInTheDocument();
+    expect(writeText.mock.calls[0][0]).toContain("TASK");
+    expect(await screen.findByText("Copied to clipboard")).toBeInTheDocument();
   });
 
-  it("keeps the free-form composer copy button disabled until there is text", async () => {
-    const { user, writeText } = setup();
-    render(<PromptBank />);
-    const copy = screen.getByRole("button", { name: /Copy prompt/ });
-    expect(copy).toBeDisabled();
+  it("reveals the underlying base instructions on request", async () => {
+    const { user } = setup();
+    const { container } = render(<PromptBank />);
 
-    await user.type(screen.getByLabelText("Prompt workspace"), "Draft a closing checklist.");
-    expect(copy).toBeEnabled();
-    await user.click(copy);
-    expect(writeText).toHaveBeenCalledWith("Draft a closing checklist.");
+    await user.selectOptions(screen.getByLabelText("What do you need to do?"), "Review a document");
+    await user.click(screen.getByText("M&A diligence risk matrix"));
+
+    // The base prompt also appears inside the generated-prompt textarea (by
+    // design), so scope this check to the dedicated reveal panel.
+    expect(container.querySelector(".base-instructions")).not.toBeInTheDocument();
+    await user.click(screen.getByText("See the underlying instructions"));
+    expect(container.querySelector(".base-instructions")).toHaveTextContent(/Act as deal counsel/);
   });
 
-  it("returns to the landing view from the Change button", async () => {
+  it("tracks recently used prompts on the home screen", async () => {
     const { user } = setup();
     render(<PromptBank />);
-    await user.click(screen.getByRole("button", { name: /Diligence \/ Extraction/ }));
-    await user.click(screen.getByText("Change-of-control consent sweep"));
-    await user.click(screen.getByRole("button", { name: "Change" }));
 
-    expect(screen.getByRole("heading", { name: "What are you working on?" })).toBeInTheDocument();
-    expect(screen.getByLabelText("Prompt workspace")).toHaveValue("");
-  });
+    await user.selectOptions(screen.getByLabelText("What do you need to do?"), "Review a document");
+    await user.click(screen.getByText("M&A diligence risk matrix"));
+    await user.click(screen.getByRole("button", { name: "← Start over" }));
 
-  it("opens the matching practice menu from a featured workflow card", async () => {
-    const { user } = setup();
-    render(<PromptBank />);
-    await user.click(screen.getByText("Fund launch"));
-
-    expect(screen.getByRole("dialog", { name: "Investment Funds prompts" })).toBeInTheDocument();
-  });
-
-  it("selects a prompt straight from search results", async () => {
-    const { user } = setup();
-    render(<PromptBank />);
-    await user.type(screen.getByLabelText("Search the prompt bank"), "side letter");
-    await user.click(screen.getByText("Side letter obligations matrix"));
-
-    expect(screen.getByRole("heading", { name: "Side letter obligations matrix" })).toBeInTheDocument();
-    expect(screen.getByLabelText("Search the prompt bank")).toHaveValue("");
+    const recent = screen.getByText("Recently used").closest("section")!;
+    expect(within(recent).getByText("M&A diligence risk matrix")).toBeInTheDocument();
   });
 });
