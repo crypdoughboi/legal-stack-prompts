@@ -7,15 +7,30 @@ interface TopBarProps {
   onQueryChange: (query: string) => void;
   onSearch: (query: string) => void;
   onGoHome: () => void;
+  onOpenNav: () => void;
   promptCount: number;
   practiceCount: number;
 }
 
-/** Sticky header: logo lockup, inline search, and the library size on the right. */
-export function TopBar({ query, onQueryChange, onSearch, onGoHome, promptCount, practiceCount }: TopBarProps) {
+/** Sticky header: a mobile nav toggle, logo lockup, inline search, and the library size. */
+export function TopBar({
+  query,
+  onQueryChange,
+  onSearch,
+  onGoHome,
+  onOpenNav,
+  promptCount,
+  practiceCount,
+}: TopBarProps) {
   return (
     <header className="topbar">
       <div className="topbar-inner">
+        <button className="nav-toggle" onClick={onOpenNav} aria-label="Open task and practice area navigation">
+          <span />
+          <span />
+          <span />
+        </button>
+
         <button className="brand" onClick={onGoHome} aria-label="The Legal Stack Prompt Bank home">
           <span className="brand-mark" aria-hidden="true">
             LS

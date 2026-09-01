@@ -5,44 +5,43 @@ import { allPrompts, practices, tasks, type NavPrompt } from "@/lib/prompt-nav";
 import type { TaskId } from "@/lib/prompt-meta";
 
 const STEPS = [
-  { n: "1", label: "Pick the task", detail: "Choose from the menus, then open a prompt from the list." },
+  { n: "1", label: "Pick the task", detail: "Use the left-hand nav, then open a prompt from the list." },
   { n: "2", label: "Add three facts", detail: "The matter, the side you act for, and what you want back." },
   { n: "3", label: "Copy the prompt", detail: "Paste it into your firm's approved AI tool." },
 ];
 
 interface HomeViewProps {
-  browseTask: TaskId | "";
-  browsePractice: string | "";
-  onTaskSelect: (value: string) => void;
-  onPracticeSelect: (value: string) => void;
-  onClearBrowse: () => void;
+  navTask: TaskId | "";
+  navPractice: string;
+  navTopic: string;
+  onClearNav: () => void;
   recentPrompts: NavPrompt[];
   onOpenPrompt: (prompt: NavPrompt) => void;
   openGroups: Record<string, boolean>;
   onToggleGroup: (id: string, currentlyOpen: boolean) => void;
 }
 
-/** Browse-first home: task/practice dropdowns above an expandable grouped list. */
+/** Browse-first home: an expandable grouped list, filtered by the left-hand nav. */
 export function HomeView({
-  browseTask,
-  browsePractice,
-  onTaskSelect,
-  onPracticeSelect,
-  onClearBrowse,
+  navTask,
+  navPractice,
+  navTopic,
+  onClearNav,
   recentPrompts,
   onOpenPrompt,
   openGroups,
   onToggleGroup,
 }: HomeViewProps) {
-  const hasFilter = Boolean(browseTask || browsePractice);
-  const byPractice = Boolean(browseTask);
+  const hasFilter = Boolean(navTask || navPractice || navTopic);
+  const byPractice = Boolean(navTask);
 
   const pool = useMemo(() => {
     let result = allPrompts;
-    if (browseTask) result = result.filter((prompt) => prompt.task === browseTask);
-    if (browsePractice) result = result.filter((prompt) => prompt.practice === browsePractice);
+    if (navTask) result = result.filter((prompt) => prompt.task === navTask);
+    if (navPractice) result = result.filter((prompt) => prompt.practice === navPractice);
+    if (navTopic) result = result.filter((prompt) => prompt.topic === navTopic);
     return result;
-  }, [browseTask, browsePractice]);
+  }, [navTask, navPractice, navTopic]);
 
   const groups = useMemo(() => {
     const buckets = byPractice ? practices : tasks;
@@ -65,52 +64,13 @@ export function HomeView({
   return (
     <main className="home-main">
       <h1 className="home-title">Every prompt your practice needs.</h1>
-      <p className="home-subhead">Pick a task, narrow by practice area, open the prompt.</p>
-
-      <div className="home-filters">
-        <label className="field-select">
-          <span>What do you need to do?</span>
-          <span className="select-wrap">
-            <select
-              aria-label="What do you need to do?"
-              value={browseTask}
-              onChange={(event) => onTaskSelect(event.target.value)}
-            >
-              <option value="">All tasks</option>
-              {tasks.map((task) => (
-                <option key={task.id} value={task.id}>
-                  {task.label}
-                </option>
-              ))}
-            </select>
-            <span className="select-caret" aria-hidden="true">▼</span>
-          </span>
-        </label>
-        <label className="field-select">
-          <span>Practice area</span>
-          <span className="select-wrap">
-            <select
-              aria-label="Practice area"
-              value={browsePractice}
-              onChange={(event) => onPracticeSelect(event.target.value)}
-            >
-              <option value="">All practice areas</option>
-              {practices.map((practice) => (
-                <option key={practice.id} value={practice.id}>
-                  {practice.label}
-                </option>
-              ))}
-            </select>
-            <span className="select-caret" aria-hidden="true">▼</span>
-          </span>
-        </label>
-      </div>
+      <p className="home-subhead">Pick a task on the left, narrow by practice area, open the prompt.</p>
 
       <div className="home-filter-status">
         <span>
           {pool.length} {pool.length === 1 ? "prompt" : "prompts"} shown
         </span>
-        {hasFilter && <button onClick={onClearBrowse}>Clear selection</button>}
+        {hasFilter && <button onClick={onClearNav}>Clear selection</button>}
       </div>
 
       <div className="home-steps">
@@ -174,7 +134,7 @@ export function HomeView({
             ))}
           </div>
         ) : (
-          <p className="groups-empty">No prompts for that combination. Try clearing the practice area.</p>
+          <p className="groups-empty">No prompts for that combination. Try clearing a filter on the left.</p>
         )}
       </section>
     </main>

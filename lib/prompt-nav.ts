@@ -56,6 +56,24 @@ export function taskById(id: TaskId): TaskDefinition | undefined {
   return TASKS.find((task) => task.id === id);
 }
 
+/** A practice's topic, surfaced as an optional secondary filter once that practice is chosen. */
+export interface TopicOption {
+  label: string;
+  count: number;
+}
+
+/**
+ * The subcategories within a practice area — not shown until a lawyer picks
+ * that practice, so the primary nav stays task-first and uncluttered.
+ */
+export function topicsForPractice(practiceId: string): TopicOption[] {
+  const category = categories.find((c) => c.id === practiceId);
+  if (!category) return [];
+  return category.topics
+    .map((topic) => ({ label: topic.label, count: topic.promptIds.length }))
+    .filter((topic) => topic.count > 0);
+}
+
 export function promptsForTask(id: TaskId): NavPrompt[] {
   return allPrompts.filter((prompt) => prompt.task === id);
 }
