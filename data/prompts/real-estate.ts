@@ -6,31 +6,31 @@ export const realEstate: PromptCategory = {
   shortLabel: `RE`,
   topics: [
     {
-      label: `Acquisitions & property diligence`,
+      label: `Acquisitions & Property Diligence`,
       promptIds: [`psa-issue-list`, `title-survey`, `property-diligence`, `student-housing-portfolio`, `real-estate-diligence-request-list`, `service-contract-and-vendor-diligence`, `zoning-and-land-use-document-review`, `environmental-diligence-issue-matrix`],
     },
     {
-      label: `Leasing, estoppels & sale-leasebacks`,
+      label: `Leasing, Estoppels & Sale-Leasebacks`,
       promptIds: [`lease-abstract`, `estoppel-snda`, `hartland-sale-leaseback`, `tenant-side-lease-review`, `landlord-side-lease-review`, `lease-abstraction-with-amendment-tracing`, `lease-operating-expense-audit`, `renewal-and-expansion-option-analysis`, `assignment-and-change-of-control-analysis`, `tenant-estoppel-vs-lease-reconciliation`, `lease-negotiation-call-sheet`, `snda-review`, `portfolio-estoppel-reconciliation`, `estoppel-and-snda-closing-tracker`],
     },
     {
-      label: `Closings, joint ventures & development`,
+      label: `Closings, Joint Ventures & Development`,
       promptIds: [`re-closing`, `asana-retail-jv`, `real-estate-jv-agreement-review`, `jv-waterfall-specification-audit`, `development-agreement-review`, `development-entitlement-condition-tracker`, `property-management-agreement-review`, `real-estate-closing-checklist`, `proration-and-settlement-statement-verification`, `critical-dates-portfolio-calendar`],
     },
     {
-      label: `Purchase & sale agreements`,
+      label: `Purchase & Sale Agreements`,
       promptIds: [`buyer-side-psa-review`, `seller-side-psa-review`, `psa-draft-from-loi-and-precedent`, `psa-critical-dates-extract`, `psa-closing-deliverables-checklist`, `psa-markup-to-negotiation-issues`],
     },
     {
-      label: `Real estate finance`,
+      label: `Real Estate Finance`,
       promptIds: [`real-estate-loan-agreement-review`, `mortgage-deed-of-trust-review`, `bad-boy-guaranty-review`, `loan-document-consistency-audit`, `real-estate-loan-closing-checklist`],
     },
     {
-      label: `Title & survey`,
+      label: `Title & Survey`,
       promptIds: [`title-commitment-and-survey-review`, `title-objection-letter-builder`, `recorded-document-restriction-abstract`, `survey-exception-issue-spot`, `title-and-survey-closing-cure-tracker`],
     },
     {
-      label: `Compare drafts & negotiation`,
+      label: `Compare Drafts & Negotiation`,
       promptIds: [`real-estate-document-markup-to-issues-list`, `real-estate-negotiation-strategy`],
     },
   ],

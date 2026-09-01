@@ -6,27 +6,27 @@ export const restructuring: PromptCategory = {
   shortLabel: `RX`,
   topics: [
     {
-      label: `Capital structure & case strategy`,
+      label: `Capital Structure & Case Strategy`,
       promptIds: [`capital-structure`, `rsa-review`, `critical-dates`, `restructuring-support-agreement-review`, `rsa-milestone-and-termination-trigger-tracker`, `out-of-court-exchange-offer-document-review`, `consent-solicitation-threshold-analysis`, `restructuring-term-sheet-to-document-workplan`],
     },
     {
-      label: `DIP financing & first-day relief`,
+      label: `DIP Financing & First-Day Relief`,
       promptIds: [`dip-order-check`, `first-day-motions`, `multi-affiliate-first-day`, `dip-credit-agreement-review`, `dip-order-hot-provisions-review`, `dip-credit-agreement-vs-dip-order-audit`, `cash-collateral-order-review`, `dip-budget-covenant-tracker`],
     },
     {
-      label: `Plans, sales & executory contracts`,
+      label: `Plans, Sales & Executory Contracts`,
       promptIds: [`plan-disclosure`, `red-lobster-stalking-horse`, `lease-portfolio-365`, `plan-of-reorganization-treatment-matrix`, `plan-and-disclosure-statement-consistency-audit`, `plan-waterfall-and-recovery-verification`, `release-exculpation-and-injunction-review`, `effective-date-conditions-checklist`, `creditor-position-and-recovery-analysis`, `proof-of-claim-review`, `claims-objection-package-builder`, `executory-contract-assumption-rejection-matrix`, `cure-claim-reconciliation`, `section-363-bidder-compliance-checklist`, `363-apa-buyer-side-review`, `sale-order-vs-apa-consistency-audit`, `bid-comparison-matrix`],
     },
     {
-      label: `Chapter 11 & first-day matters`,
+      label: `Chapter 11 & First-Day Matters`,
       promptIds: [`first-day-motion-fact-verification`, `first-day-relief-matrix`, `docket-order-and-deadline-tracker`, `first-day-order-vs-motion-comparison`, `chapter-11-case-opening-executive-brief`],
     },
     {
-      label: `LMTs, debt capacity & intercreditor`,
+      label: `LMTs, Debt Capacity & Intercreditor`,
       promptIds: [`liability-management-documentary-capacity-screen`, `uptier-exchange-consent-path-analysis`, `drop-down-unrestricted-subsidiary-capacity-analysis`, `intercreditor-rights-in-restructuring-scenario`],
     },
     {
-      label: `Chronologies & client updates`,
+      label: `Chronologies & Client Updates`,
       promptIds: [`restructuring-chronology-builder`, `weekly-restructuring-client-update`],
     },
   ],

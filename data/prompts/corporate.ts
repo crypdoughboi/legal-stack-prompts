@@ -6,19 +6,19 @@ export const corporate: PromptCategory = {
   shortLabel: `M&A`,
   topics: [
     {
-      label: `Acquisition agreements & diligence`,
+      label: `Acquisition Agreements & Diligence`,
       promptIds: [`ma-diligence`, `purchase-agreement-issues`, `term-sheet-consistency`, `disclosure-schedules`],
     },
     {
-      label: `Signing, closing & ancillaries`,
+      label: `Signing, Closing & Ancillaries`,
       promptIds: [`closing-checklist`, `ancillary-drafts`, `escrow-agreement-consistency-review`, `transition-services-agreement-review`, `rollover-agreement-review`, `restrictive-covenant-agreement-consistency-check`, `employment-and-retention-agreement-review-for-deal`, `signing-and-closing-checklist-builder`, `closing-checklist-completeness-audit`, `funds-flow-verification`, `post-closing-obligations-tracker`, `purchase-price-adjustment-dispute-analysis`],
     },
     {
-      label: `Public-company & strategic M&A`,
+      label: `Public-Company & Strategic M&A`,
       promptIds: [`green-dot-carveout`, `weatherford-mixed-consideration`, `terrestrial-spac`],
     },
     {
-      label: `Cross-border, energy & special situations`,
+      label: `Cross-Border, Energy & Special Situations`,
       promptIds: [`chemaf-critical-minerals`, `kufpec-upstream-interest`],
     },
     {
@@ -26,27 +26,27 @@ export const corporate: PromptCategory = {
       promptIds: [`buyer-side-nda-playbook-review`, `seller-side-nda-playbook-review`, `nda-redline-to-issues-list`, `clean-team-and-competitively-sensitive-information-protocol`],
     },
     {
-      label: `LOIs & term sheets`,
+      label: `LOIs & Term Sheets`,
       promptIds: [`loi-buyer-side-review`, `loi-seller-side-review`, `term-sheet-to-definitive-document-instruction-set`, `loi-precedent-benchmark`],
     },
     {
-      label: `Purchase agreements`,
+      label: `Purchase Agreements`,
       promptIds: [`buyer-side-stock-purchase-agreement-review`, `seller-side-stock-purchase-agreement-review`, `asset-purchase-agreement-liability-allocation-review`, `merger-agreement-deal-protection-review`, `working-capital-adjustment-mechanics-audit`, `earnout-mechanics-audit`, `purchase-agreement-draft-from-precedent`, `rep-and-covenant-interdependency-map`, `mae-definition-and-closing-condition-analysis`, `fraud-and-non-reliance-framework-review`],
     },
     {
-      label: `M&A due diligence`,
+      label: `M&A Due Diligence`,
       promptIds: [`manda-diligence-request-list-builder`, `material-contract-diligence-review`, `change-of-control-and-consent-diligence`, `debt-and-lien-diligence`, `employment-and-change-in-control-diligence`, `ip-ownership-and-license-diligence`, `privacy-and-cyber-diligence`, `real-estate-diligence-for-manda`, `litigation-and-regulatory-diligence`, `diligence-findings-to-executive-red-flag-report`],
     },
     {
-      label: `Disclosure schedules`,
+      label: `Disclosure Schedules`,
       promptIds: [`seller-disclosure-schedule-completeness-audit`, `buyer-review-of-seller-disclosure-schedules`, `disclosure-schedule-first-draft-from-diligence`, `disclosure-schedule-cross-reference-audit`, `disclosure-schedule-change-tracker`],
     },
     {
-      label: `Risk allocation provisions`,
+      label: `Risk Allocation Provisions`,
       promptIds: [`representation-coverage-map`, `knowledge-qualifier-audit`, `materiality-scrape-analysis`, `indemnification-waterfall-review`, `closing-condition-bring-down-audit`, `interim-operating-covenant-review`, `restrictive-covenant-review`, `tax-covenant-and-indemnity-issue-spot`],
     },
     {
-      label: `Compare drafts & negotiation`,
+      label: `Compare Drafts & Negotiation`,
       promptIds: [`purchase-agreement-markup-to-issues-list`, `purchase-agreement-precedent-deviation-analysis`, `manda-negotiation-call-sheet`, `specialist-comment-consolidation`, `deal-terms-executive-summary`],
     },
   ],

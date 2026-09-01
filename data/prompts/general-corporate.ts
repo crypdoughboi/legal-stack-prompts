@@ -6,31 +6,31 @@ export const generalCorporate: PromptCategory = {
   shortLabel: `GC`,
   topics: [
     {
-      label: `Corporate governance`,
+      label: `Corporate Governance`,
       promptIds: [`board-consent-authority-audit`, `board-materials-decision-memo`, `reserved-matters-map`, `stockholder-approval-analysis`, `director-and-officer-authority-matrix`],
     },
     {
-      label: `Entity formation & capitalization`,
+      label: `Entity Formation & Capitalization`,
       promptIds: [`entity-formation-package-review`, `capitalization-rights-reconciliation`, `equity-issuance-closing-checklist`, `safe-and-convertible-note-conversion-audit`, `subsidiary-and-entity-structure-map`],
     },
     {
-      label: `Commercial agreements`,
+      label: `Commercial Agreements`,
       promptIds: [`customer-msa-playbook-review`, `vendor-agreement-risk-review`, `saas-agreement-review`, `data-processing-addendum-review`, `nda-review-and-redline-instructions`, `ip-license-scope-analysis`, `distribution-agreement-review`, `professional-services-agreement-and-sow-hierarchy-review`],
     },
     {
-      label: `Drafting & contract QA`,
+      label: `Drafting & Contract QA`,
       promptIds: [`draft-agreement-from-approved-precedent`, `targeted-amendment-with-consequential-effects-check`, `defined-term-integrity-audit`, `cross-reference-and-schedule-audit`, `missing-provision-audit-against-baseline`, `multi-document-consistency-audit`],
     },
     {
-      label: `Due diligence & securities`,
+      label: `Due Diligence & Securities`,
       promptIds: [`material-contracts-diligence-matrix`, `entity-compliance-and-good-standing-audit`, `private-offering-exemption-checklist`, `disclosure-consistency-check`, `beneficial-ownership-and-control-rights-map`],
     },
     {
-      label: `Corporate housekeeping & obligations`,
+      label: `Corporate Housekeeping & Obligations`,
       promptIds: [`executed-contract-obligations-tracker`, `renewal-and-termination-calendar`, `corporate-records-book-completeness-audit`, `signature-and-execution-audit`],
     },
     {
-      label: `Negotiation, research & communications`,
+      label: `Negotiation, Research & Communications`,
       promptIds: [`negotiation-playbook-from-precedents`, `executive-contract-summary`, `board-approval-memo-from-operative-documents`, `targeted-contract-law-research-memo`],
     },
   ],

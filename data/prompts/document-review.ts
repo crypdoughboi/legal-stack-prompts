@@ -6,15 +6,15 @@ export const documentReview: PromptCategory = {
   shortLabel: `REVIEW`,
   topics: [
     {
-      label: `Precedent, redlines & drafting posture`,
+      label: `Precedent, Redlines & Drafting Posture`,
       promptIds: [`precedent-compare`, `redline-explain`, `buyer-seller-flip`],
     },
     {
-      label: `Drafting quality control`,
+      label: `Drafting Quality Control`,
       promptIds: [`defined-term-audit`, `proofread`],
     },
     {
-      label: `Negotiation history`,
+      label: `Negotiation History`,
       promptIds: [`negotiation-log`],
     },
   ],

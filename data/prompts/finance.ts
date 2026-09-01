@@ -6,43 +6,43 @@ export const finance: PromptCategory = {
   shortLabel: `FIN`,
   topics: [
     {
-      label: `Credit agreements & commitment papers`,
+      label: `Credit Agreements & Commitment Papers`,
       promptIds: [`credit-agreement-summary`, `commitment-paper-check`, `covenant-capacity`, `amendment-waiver`, `borrower-side-credit-agreement-review`, `lender-side-credit-agreement-review`, `credit-agreement-draft-from-term-sheet`, `defined-terms-and-covenant-dependency-audit`, `mandatory-prepayment-mechanics-review`, `event-of-default-and-cure-analysis`, `assignment-and-lender-voting-rights-audit`, `credit-agreement-executive-summary`],
     },
     {
-      label: `Closing conditions, guarantees & collateral`,
+      label: `Closing Conditions, Guarantees & Collateral`,
       promptIds: [`conditions-precedent`, `security-package`, `security-agreement-review`, `guarantee-review`, `collateral-package-completeness-audit`, `guarantor-coverage-and-release-test`, `ucc-and-lien-search-exceptions-review`, `collateral-release-mechanics-analysis`, `conditions-precedent-checklist`, `existing-cp-checklist-audit`, `legal-opinion-coverage-matrix`, `financing-funds-flow-verification`],
     },
     {
-      label: `Syndicated loans & refinancings`,
+      label: `Syndicated Loans & Refinancings`,
       promptIds: [`syndicated-refinancing`],
     },
     {
-      label: `Structured finance & securitization`,
+      label: `Structured Finance & Securitization`,
       promptIds: [`cloudhq-abs`, `fiber-revenue-notes`, `whole-business-securitization`],
     },
     {
-      label: `Term sheets & commitment letters`,
+      label: `Term Sheets & Commitment Letters`,
       promptIds: [`borrower-side-financing-term-sheet-review`, `lender-side-financing-term-sheet-review`, `commitment-letter-conditions-review`, `market-flex-and-fee-letter-analysis`, `commitment-package-consistency-audit`],
     },
     {
-      label: `Covenants & capacity`,
+      label: `Covenants & Capacity`,
       promptIds: [`debt-basket-capacity-analysis`, `restricted-payment-capacity-analysis`, `investment-basket-capacity-analysis`, `lien-capacity-analysis`, `incremental-facility-capacity-analysis`, `unrestricted-subsidiary-designation-analysis`, `ebitda-add-back-audit`, `financial-covenant-compliance-test`, `asset-sale-and-reinvestment-capacity-analysis`, `available-amount-builder-basket-ledger`],
     },
     {
-      label: `Intercreditor & subordination`,
+      label: `Intercreditor & Subordination`,
       promptIds: [`intercreditor-agreement-review`, `abl-term-loan-intercreditor-analysis`, `subordination-agreement-review`, `intercreditor-bankruptcy-scenario-analysis`],
     },
     {
-      label: `Amendments & waivers`,
+      label: `Amendments & Waivers`,
       promptIds: [`amendment-consent-and-sacred-rights-analysis`, `waiver-request-analysis`, `amendment-conforming-changes-audit`],
     },
     {
-      label: `Compare drafts & summaries`,
+      label: `Compare Drafts & Summaries`,
       promptIds: [`credit-agreement-markup-to-issues-list`, `financing-precedent-comparison`, `financing-deal-summary`],
     },
     {
-      label: `Compliance & administration`,
+      label: `Compliance & Administration`,
       promptIds: [`borrower-compliance-calendar`, `compliance-certificate-verification`],
     },
   ],

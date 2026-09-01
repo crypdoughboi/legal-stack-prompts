@@ -6,15 +6,15 @@ export const communications: PromptCategory = {
   shortLabel: `COMMS`,
   topics: [
     {
-      label: `Partner updates & client advice`,
+      label: `Partner Updates & Client Advice`,
       promptIds: [`partner-email`, `client-options`],
     },
     {
-      label: `Negotiations, calls & action items`,
+      label: `Negotiations, Calls & Action Items`,
       promptIds: [`call-agenda`, `meeting-to-actions`],
     },
     {
-      label: `Draft circulation & matter handoffs`,
+      label: `Draft Circulation & Matter Handoffs`,
       promptIds: [`redline-cover`, `deal-summary`],
     },
   ],

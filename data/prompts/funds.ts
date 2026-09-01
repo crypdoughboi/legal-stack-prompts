@@ -6,23 +6,23 @@ export const funds: PromptCategory = {
   shortLabel: `FUNDS`,
   topics: [
     {
-      label: `Formation, offering & first close`,
+      label: `Formation, Offering & First Close`,
       promptIds: [`lpa-terms`, `ppm-consistency`, `subscription-review`, `fund-formation`, `jadwa-private-credit`, `lpa-manager-side-review`, `investor-side-lpa-review`, `lpa-draft-from-prior-fund-and-term-sheet`, `prior-fund-vs-new-fund-lpa-comparison`, `key-person-provision-analysis`, `removal-and-no-fault-rights-analysis`, `lpa-defined-term-and-cross-reference-audit`, `ppm-to-lpa-consistency-audit`, `ppm-risk-factor-gap-review`, `subscription-agreement-review`, `investor-subscription-package-verification`, `subscription-agreement-change-tracker`],
     },
     {
-      label: `Investor terms & side letters`,
+      label: `Investor Terms & Side Letters`,
       promptIds: [`side-letter-obligations`, `mfn-analysis`, `manager-side-side-letter-review`, `investor-side-side-letter-request-review`, `cross-investor-side-letter-matrix`, `mfn-eligibility-analysis`, `mfn-election-package-verification`, `side-letter-clause-draft-from-precedent`, `side-letter-operational-obligations-register`, `lpa-to-side-letter-conflict-audit`],
     },
     {
-      label: `Special vehicles & manager transitions`,
+      label: `Special Vehicles & Manager Transitions`,
       promptIds: [`manrre-reit-conversion`],
     },
     {
-      label: `GP & management company documents`,
+      label: `GP & Management Company Documents`,
       promptIds: [`management-agreement-review`, `gp-agreement-review`, `management-company-agreement-review`, `gp-manager-document-suite-consistency-audit`],
     },
     {
-      label: `Investor negotiation & diligence`,
+      label: `Investor Negotiation & Diligence`,
       promptIds: [`investor-ddq-response-drafting-with-source-controls`, `investor-request-to-negotiation-issues-list`, `investor-negotiation-call-sheet`, `investor-diligence-request-tracker`, `most-favored-investor-precedent-impact-review`],
     },
     {
@@ -30,15 +30,15 @@ export const funds: PromptCategory = {
       promptIds: [`investment-adviser-regulatory-obligations-map`, `fund-marketing-rule-review`, `form-adv-consistency-review`, `conflicts-inventory-builder`, `regulatory-change-impact-assessment`],
     },
     {
-      label: `Marketing & investor communications`,
+      label: `Marketing & Investor Communications`,
       promptIds: [`fund-terms-comparison-for-investor`, `investor-update-source-verification`, `investor-notice-drafting-from-governing-documents`],
     },
     {
-      label: `Economics, governance & conflicts`,
+      label: `Economics, Governance & Conflicts`,
       promptIds: [`fees-and-expenses-allocation-audit`, `waterfall-and-carried-interest-specification`, `management-fee-calculation-audit`, `continuation-vehicle-conflict-review`, `key-governance-rights-matrix`],
     },
     {
-      label: `Closing & ongoing compliance`,
+      label: `Closing & Ongoing Compliance`,
       promptIds: [`fund-closing-checklist`, `investor-closing-readiness-matrix`, `fund-compliance-obligations-tracker`],
     },
   ],

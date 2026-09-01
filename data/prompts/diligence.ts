@@ -6,15 +6,15 @@ export const diligence: PromptCategory = {
   shortLabel: `DD`,
   topics: [
     {
-      label: `Contract review & change of control`,
+      label: `Contract Review & Change Of Control`,
       promptIds: [`change-control`, `contract-matrix`],
     },
     {
-      label: `Consents, notices & closing readiness`,
+      label: `Consents, Notices & Closing Readiness`,
       promptIds: [`consent-list`],
     },
     {
-      label: `Data room gaps & reporting`,
+      label: `Data Room Gaps & Reporting`,
       promptIds: [`missing-documents`, `risk-summary`, `data-room-status`],
     },
   ],
