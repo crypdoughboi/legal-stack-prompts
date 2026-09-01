@@ -105,22 +105,102 @@ a:hover {
   width: var(--nav-width);
   background: var(--nav-bg);
   color: var(--nav-ink);
-  padding: 26px 20px 24px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
   position: sticky;
   top: 0;
   align-self: flex-start;
   height: 100vh;
-  overflow-y: auto;
+  overflow: hidden;
   z-index: 50;
+  transition: width 0.18s ease;
 }
-.side-nav-head {
+/* The brand row is its own flex-none header, so it never scrolls away even
+   if the task/topic list below grows past the viewport. */
+.side-nav-topbar {
+  flex: none;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 8px;
+  padding: 18px 14px 18px 20px;
+  border-bottom: 1px solid var(--nav-border);
+}
+.side-nav-brand {
+  background: none;
+  border: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  padding: 2px 0;
+  color: var(--nav-ink);
+}
+.side-nav-mark {
+  width: 26px;
+  height: 26px;
+  flex: none;
+  background: #fff;
+  color: var(--nav-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 5px;
+}
+.side-nav-brand-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.side-nav-brand-copy strong {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.008em;
+}
+.side-nav-brand-copy small {
+  color: var(--nav-muted);
+  font-size: 10.5px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.side-nav-topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: none;
+}
+.side-nav-collapse-toggle {
+  background: none;
+  border: 1px solid var(--nav-border);
+  border-radius: 7px;
+  color: var(--nav-ink-soft);
+  cursor: pointer;
+  width: 26px;
+  height: 26px;
+  font-size: 14px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.side-nav-collapse-toggle:hover {
+  background: var(--nav-bg-hover);
+  color: #fff;
+}
+.side-nav-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 20px 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 .side-nav-eyebrow {
   font-size: 11.5px;
@@ -306,42 +386,6 @@ a:hover {
   display: flex;
   align-items: center;
   gap: 28px;
-}
-.brand {
-  background: none;
-  border: 0;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  padding: 6px 0;
-  text-decoration: none;
-  color: var(--ink);
-  flex: none;
-  white-space: nowrap;
-}
-.brand-mark {
-  width: 24px;
-  height: 24px;
-  background: var(--accent);
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 11px;
-  font-weight: 600;
-  flex: none;
-}
-.brand-name {
-  font-size: 15px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-}
-.brand-sub {
-  color: var(--muted-3);
-  font-size: 12.5px;
-  border-left: 1px solid var(--border-field);
-  padding-left: 9px;
 }
 .topbar-search {
   flex: 1;
@@ -1165,6 +1209,9 @@ a:hover {
     align-items: center;
     justify-content: center;
   }
+  .side-nav-collapse-toggle {
+    display: none;
+  }
   .side-nav-backdrop {
     display: block;
     position: fixed;
@@ -1180,11 +1227,18 @@ a:hover {
   .topbar-inner {
     gap: 12px;
   }
-  .brand-sub {
-    display: none;
-  }
   .topbar-count {
     display: none;
+  }
+}
+@media (min-width: 900px) {
+  .side-nav.collapsed {
+    width: 68px;
+  }
+  .side-nav.collapsed .side-nav-topbar {
+    justify-content: center;
+    padding-left: 12px;
+    padding-right: 12px;
   }
 }
 @media (prefers-reduced-motion: reduce) {

@@ -52,6 +52,7 @@ export function PromptBank() {
   const [navPractice, setNavPractice] = useState("");
   const [navTopic, setNavTopic] = useState("");
   const [navOpen, setNavOpen] = useState(false);
+  const [navCollapsed, setNavCollapsed] = useState(false);
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({});
 
   // The selected prompt and its guided-builder state.
@@ -187,6 +188,9 @@ export function PromptBank() {
           onSelectPractice={selectNavPractice}
           onSelectTopic={selectNavTopic}
           onClearAll={clearNav}
+          onGoHome={goHome}
+          collapsed={navCollapsed}
+          onToggleCollapsed={() => setNavCollapsed((c) => !c)}
           isOpen={navOpen}
           onClose={() => setNavOpen(false)}
         />
@@ -196,7 +200,6 @@ export function PromptBank() {
             query={query}
             onQueryChange={setQuery}
             onSearch={runSearch}
-            onGoHome={goHome}
             onOpenNav={() => setNavOpen(true)}
             promptCount={totalPromptCount}
             practiceCount={practices.length}

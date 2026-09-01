@@ -40,6 +40,9 @@ describe("PromptBank", () => {
     expect(screen.getByText(/Built by/)).toBeInTheDocument();
 
     const nav = sideNav();
+    expect(
+      within(nav).getByRole("button", { name: "The Legal Stack Prompt Bank home" }),
+    ).toHaveTextContent("The Legal Stack");
     expect(within(nav).getByText("What do you need to do?")).toBeInTheDocument();
     expect(within(nav).getByRole("button", { name: "All tasks" })).toHaveAttribute("aria-pressed", "true");
     for (const label of [
@@ -162,6 +165,37 @@ describe("PromptBank", () => {
     await user.click(screen.getByRole("button", { name: "Open task and practice area navigation" }));
     await user.click(within(sideNav()).getByRole("button", { name: "Draft something" }));
     expect(sideNav()).not.toHaveClass("open");
+  });
+
+  it("collapses the side nav to a slim rail, keeping the brand pinned and clickable", async () => {
+    const { user } = setup();
+    render(<PromptBank />);
+    const nav = sideNav();
+
+    expect(nav).not.toHaveClass("collapsed");
+    expect(within(nav).getByText("What do you need to do?")).toBeInTheDocument();
+
+    await user.click(within(nav).getByRole("button", { name: "Collapse navigation" }));
+    expect(nav).toHaveClass("collapsed");
+    expect(within(nav).queryByText("What do you need to do?")).not.toBeInTheDocument();
+    // The brand stays put in the collapsed rail.
+    expect(within(nav).getByRole("button", { name: "The Legal Stack Prompt Bank home" })).toBeInTheDocument();
+
+    await user.click(within(nav).getByRole("button", { name: "Expand navigation" }));
+    expect(nav).not.toHaveClass("collapsed");
+    expect(within(nav).getByText("What do you need to do?")).toBeInTheDocument();
+  });
+
+  it("returns to the untouched home from the brand button in the side nav", async () => {
+    const { user } = setup();
+    render(<PromptBank />);
+
+    await openMaDiligence(user);
+    expect(screen.queryByRole("heading", { name: "Every prompt your practice needs." })).not.toBeInTheDocument();
+
+    await user.click(within(sideNav()).getByRole("button", { name: "The Legal Stack Prompt Bank home" }));
+    expect(screen.getByRole("heading", { name: "Every prompt your practice needs." })).toBeInTheDocument();
+    expect(within(sideNav()).getByRole("button", { name: "All tasks" })).toHaveAttribute("aria-pressed", "true");
   });
 
   it("searches from the header and opens a result", async () => {

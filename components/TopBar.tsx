@@ -6,22 +6,13 @@ interface TopBarProps {
   query: string;
   onQueryChange: (query: string) => void;
   onSearch: (query: string) => void;
-  onGoHome: () => void;
   onOpenNav: () => void;
   promptCount: number;
   practiceCount: number;
 }
 
-/** Sticky header: a mobile nav toggle, logo lockup, inline search, and the library size. */
-export function TopBar({
-  query,
-  onQueryChange,
-  onSearch,
-  onGoHome,
-  onOpenNav,
-  promptCount,
-  practiceCount,
-}: TopBarProps) {
+/** Sticky header: a mobile nav toggle, inline search, and the library size. The brand lives at the top of the side nav. */
+export function TopBar({ query, onQueryChange, onSearch, onOpenNav, promptCount, practiceCount }: TopBarProps) {
   return (
     <header className="topbar">
       <div className="topbar-inner">
@@ -29,14 +20,6 @@ export function TopBar({
           <span />
           <span />
           <span />
-        </button>
-
-        <button className="brand" onClick={onGoHome} aria-label="The Legal Stack Prompt Bank home">
-          <span className="brand-mark" aria-hidden="true">
-            LS
-          </span>
-          <span className="brand-name">The Legal Stack</span>
-          <span className="brand-sub">Prompt Bank</span>
         </button>
 
         <div className="topbar-search">
