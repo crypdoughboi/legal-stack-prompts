@@ -26,13 +26,13 @@
   --shadow-field: 0 1px 4px #16181d08;
   --nav-width: 264px;
   --nav-bg: #0f2544;
-  --nav-bg-hover: #ffffff0f;
-  --nav-bg-active: #ffffff1c;
-  --nav-ink: #eef1f6;
-  --nav-ink-soft: #c1cbdf;
-  --nav-muted: #8ea0bf;
-  --nav-border: #ffffff1f;
-  --nav-accent: #6fa3e0;
+  --nav-bg-hover: #ffffff14;
+  --nav-bg-active: #ffffff22;
+  --nav-ink: #ffffff;
+  --nav-ink-soft: #e2e8f5;
+  --nav-muted: #aebbd8;
+  --nav-border: #ffffff26;
+  --nav-accent: #7fb2ea;
 }
 * {
   box-sizing: border-box;
@@ -113,7 +113,6 @@ a:hover {
   height: 100vh;
   overflow: hidden;
   z-index: 50;
-  transition: width 0.18s ease;
 }
 /* The brand row is its own flex-none header, so it never scrolls away even
    if the task/topic list below grows past the viewport. */
@@ -159,39 +158,17 @@ a:hover {
   overflow: hidden;
 }
 .side-nav-brand-copy strong {
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 15px;
+  font-weight: 700;
   letter-spacing: -0.008em;
+  color: #fff;
 }
 .side-nav-brand-copy small {
   color: var(--nav-muted);
-  font-size: 10.5px;
+  font-size: 11px;
+  font-weight: 600;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-}
-.side-nav-topbar-actions {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  flex: none;
-}
-.side-nav-collapse-toggle {
-  background: none;
-  border: 1px solid var(--nav-border);
-  border-radius: 7px;
-  color: var(--nav-ink-soft);
-  cursor: pointer;
-  width: 26px;
-  height: 26px;
-  font-size: 14px;
-  line-height: 1;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-.side-nav-collapse-toggle:hover {
-  background: var(--nav-bg-hover);
-  color: #fff;
 }
 .side-nav-scroll {
   flex: 1;
@@ -203,20 +180,19 @@ a:hover {
   gap: 20px;
 }
 .side-nav-eyebrow {
-  font-size: 11.5px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   color: var(--nav-muted);
-  margin: 0 0 4px;
+  margin: 0 0 6px;
   display: block;
 }
 .side-nav-optional {
   text-transform: none;
   letter-spacing: 0;
-  font-weight: 400;
+  font-weight: 500;
   color: var(--nav-muted);
-  opacity: 0.85;
 }
 .side-nav-close {
   display: none;
@@ -239,20 +215,22 @@ a:hover {
   border: 0;
   border-radius: 8px;
   cursor: pointer;
-  padding: 10px 12px;
-  font-size: 13.5px;
+  padding: 11px 12px;
+  font-size: 14.5px;
+  font-weight: 500;
+  line-height: 1.3;
   color: var(--nav-ink-soft);
   box-shadow: inset 3px 0 0 transparent;
   transition: background 0.14s, color 0.14s;
 }
 .side-nav-task:hover {
   background: var(--nav-bg-hover);
-  color: var(--nav-ink);
+  color: #fff;
 }
 .side-nav-task.active {
   background: var(--nav-bg-active);
-  color: var(--nav-ink);
-  font-weight: 600;
+  color: #fff;
+  font-weight: 700;
   box-shadow: inset 3px 0 0 var(--nav-accent);
 }
 .side-nav-divider {
@@ -269,11 +247,12 @@ a:hover {
   width: 100%;
   border: 1px solid var(--nav-border);
   border-radius: 9px;
-  background: #ffffff0a;
-  color: var(--nav-ink);
+  background: #ffffff12;
+  color: #fff;
+  font-weight: 500;
   padding: 0 12px;
-  height: 42px;
-  font-size: 13.5px;
+  height: 44px;
+  font-size: 14.5px;
   outline: none;
   cursor: pointer;
 }
@@ -286,9 +265,9 @@ a:hover {
 }
 .side-nav-hint {
   margin: 0;
-  color: var(--nav-muted);
-  font-size: 12px;
-  line-height: 1.5;
+  color: var(--nav-ink-soft);
+  font-size: 13px;
+  line-height: 1.55;
 }
 .side-nav-topics {
   display: grid;
@@ -305,8 +284,9 @@ a:hover {
   border: 0;
   border-radius: 7px;
   cursor: pointer;
-  padding: 8px 10px;
-  font-size: 12.5px;
+  padding: 9px 10px;
+  font-size: 13.5px;
+  font-weight: 500;
   color: var(--nav-ink-soft);
   display: flex;
   justify-content: space-between;
@@ -316,16 +296,17 @@ a:hover {
 }
 .side-nav-topic:hover {
   background: var(--nav-bg-hover);
-  color: var(--nav-ink);
+  color: #fff;
 }
 .side-nav-topic.active {
   background: var(--nav-bg-active);
-  color: var(--nav-ink);
-  font-weight: 600;
+  color: #fff;
+  font-weight: 700;
 }
 .side-nav-topic-count {
   color: var(--nav-muted);
-  font-size: 11px;
+  font-size: 11.5px;
+  font-weight: 600;
   flex: none;
 }
 .side-nav-clear {
@@ -335,7 +316,8 @@ a:hover {
   border: 0;
   cursor: pointer;
   color: var(--nav-ink-soft);
-  font-size: 12.5px;
+  font-size: 13px;
+  font-weight: 600;
   padding: 6px 2px;
   text-decoration: underline;
   text-underline-offset: 3px;
@@ -1209,9 +1191,6 @@ a:hover {
     align-items: center;
     justify-content: center;
   }
-  .side-nav-collapse-toggle {
-    display: none;
-  }
   .side-nav-backdrop {
     display: block;
     position: fixed;
@@ -1229,16 +1208,6 @@ a:hover {
   }
   .topbar-count {
     display: none;
-  }
-}
-@media (min-width: 900px) {
-  .side-nav.collapsed {
-    width: 68px;
-  }
-  .side-nav.collapsed .side-nav-topbar {
-    justify-content: center;
-    padding-left: 12px;
-    padding-right: 12px;
   }
 }
 @media (prefers-reduced-motion: reduce) {

@@ -167,25 +167,6 @@ describe("PromptBank", () => {
     expect(sideNav()).not.toHaveClass("open");
   });
 
-  it("collapses the side nav to a slim rail, keeping the brand pinned and clickable", async () => {
-    const { user } = setup();
-    render(<PromptBank />);
-    const nav = sideNav();
-
-    expect(nav).not.toHaveClass("collapsed");
-    expect(within(nav).getByText("What do you need to do?")).toBeInTheDocument();
-
-    await user.click(within(nav).getByRole("button", { name: "Collapse navigation" }));
-    expect(nav).toHaveClass("collapsed");
-    expect(within(nav).queryByText("What do you need to do?")).not.toBeInTheDocument();
-    // The brand stays put in the collapsed rail.
-    expect(within(nav).getByRole("button", { name: "The Legal Stack Prompt Bank home" })).toBeInTheDocument();
-
-    await user.click(within(nav).getByRole("button", { name: "Expand navigation" }));
-    expect(nav).not.toHaveClass("collapsed");
-    expect(within(nav).getByText("What do you need to do?")).toBeInTheDocument();
-  });
-
   it("returns to the untouched home from the brand button in the side nav", async () => {
     const { user } = setup();
     render(<PromptBank />);
