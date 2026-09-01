@@ -34,7 +34,7 @@ describe("PromptBank", () => {
     setup();
     render(<PromptBank />);
     expect(screen.getByRole("heading", { name: "Every prompt your practice needs." })).toBeInTheDocument();
-    expect(screen.getByText("65 prompts · 8 practice areas")).toBeInTheDocument();
+    expect(screen.getByText("324 prompts · 9 practice areas")).toBeInTheDocument();
     expect(screen.getByPlaceholderText("Search prompts")).toBeInTheDocument();
     expect(screen.getByText("All prompts by task")).toBeInTheDocument();
     expect(screen.getByText(/Built by/)).toBeInTheDocument();
@@ -124,10 +124,10 @@ describe("PromptBank", () => {
 
     await user.selectOptions(within(nav).getByLabelText("Practice area"), "Real Estate");
     const topic = within(nav).getByRole("button", { name: /Leasing, estoppels & sale-leasebacks/ });
-    expect(topic).toHaveTextContent("3");
+    expect(topic).toHaveTextContent("14");
 
     await user.click(topic);
-    expect(screen.getByText("3 prompts shown")).toBeInTheDocument();
+    expect(screen.getByText("14 prompts shown")).toBeInTheDocument();
     expect(screen.getByText("Estoppel and SNDA review")).toBeInTheDocument();
   });
 

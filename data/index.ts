@@ -1,5 +1,6 @@
 import type { PromptCategory } from "@/lib/types";
 import { corporate } from "./prompts/corporate";
+import { generalCorporate } from "./prompts/general-corporate";
 import { finance } from "./prompts/finance";
 import { restructuring } from "./prompts/restructuring";
 import { realEstate } from "./prompts/real-estate";
@@ -17,6 +18,7 @@ import { communications } from "./prompts/communications";
  */
 export const categories: PromptCategory[] = [
   corporate,
+  generalCorporate,
   finance,
   restructuring,
   realEstate,

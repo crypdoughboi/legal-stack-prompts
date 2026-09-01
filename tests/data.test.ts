@@ -3,9 +3,10 @@ import { categories, featuredWorkflows } from "@/data";
 import { groupPromptsByTopic, topicByPromptId, totalPromptCount } from "@/lib/prompt-bank";
 
 describe("prompt library", () => {
-  it("has the eight practice areas in display order", () => {
+  it("has the nine practice areas in display order", () => {
     expect(categories.map((category) => category.id)).toEqual([
       "corporate",
+      "general-corporate",
       "finance",
       "restructuring",
       "real-estate",
@@ -16,8 +17,8 @@ describe("prompt library", () => {
     ]);
   });
 
-  it("contains 65 prompts", () => {
-    expect(totalPromptCount).toBe(65);
+  it("contains 324 prompts", () => {
+    expect(totalPromptCount).toBe(324);
   });
 
   it("uses globally unique prompt ids", () => {
