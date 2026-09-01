@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { HomeView } from "@/components/HomeView";
 import { PromptWorkspace } from "@/components/PromptWorkspace";
 import { ResultsView } from "@/components/ResultsView";
+import { SideNav } from "@/components/SideNav";
 import { SiteFooter } from "@/components/SiteFooter";
 import { TopBar } from "@/components/TopBar";
 import { totalPromptCount } from "@/lib/prompt-bank";
@@ -33,8 +34,9 @@ function readRecent(): string[] {
 }
 
 /**
- * The whole application: browse-first home, search results, and the
- * single-prompt guided builder.
+ * The whole application: a persistent left-hand task/practice nav, the
+ * browse-first home it drives, search results, and the single-prompt
+ * guided builder.
  */
 export function PromptBank() {
   const [view, setView] = useState<View>("home");
@@ -43,12 +45,13 @@ export function PromptBank() {
   // Header search.
   const [query, setQuery] = useState("");
   const [committed, setCommitted] = useState("");
-  const [task, setTask] = useState<TaskId | null>(null);
   const [filter, setFilter] = useState<string | null>(null);
 
-  // Home's own browse dropdowns.
-  const [browseTask, setBrowseTask] = useState<TaskId | "">("");
-  const [browsePractice, setBrowsePractice] = useState("");
+  // The left-hand nav: task first, practice area and its subcategories optional.
+  const [navTask, setNavTask] = useState<TaskId | "">("");
+  const [navPractice, setNavPractice] = useState("");
+  const [navTopic, setNavTopic] = useState("");
+  const [navOpen, setNavOpen] = useState(false);
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({});
 
   // The selected prompt and its guided-builder state.
@@ -92,26 +95,65 @@ export function PromptBank() {
   const runSearch = (value: string) => {
     setQuery(value);
     setCommitted(value);
-    setTask(null);
+    setNavTask("");
+    setNavPractice("");
+    setNavTopic("");
     setFilter(null);
     setView("results");
   };
 
   const selectLeadTask = (id: TaskId) => {
-    setTask(id);
+    setNavTask(id);
+    setNavPractice("");
+    setNavTopic("");
+    setOpenGroups({});
     setFilter(null);
     setQuery("");
     setCommitted("");
     setView("results");
+  };
+
+  // Left-nav selections always drop the lawyer onto the browse-first home,
+  // whatever screen they were on.
+  const selectNavTask = (id: TaskId | "") => {
+    setNavTask(id);
+    setOpenGroups({});
+    setView("home");
+    setNavOpen(false);
+  };
+  const selectNavPractice = (id: string) => {
+    setNavPractice(id);
+    setNavTopic("");
+    setOpenGroups({});
+    setView("home");
+    setNavOpen(false);
+  };
+  const selectNavTopic = (topic: string) => {
+    setNavTopic(topic);
+    setOpenGroups({});
+    setView("home");
+    setNavOpen(false);
+  };
+  const clearNav = () => {
+    setNavTask("");
+    setNavPractice("");
+    setNavTopic("");
+    setOpenGroups({});
+    setView("home");
+    setNavOpen(false);
   };
 
   const goHome = () => {
     setView("home");
     setQuery("");
     setCommitted("");
-    setTask(null);
     setFilter(null);
     setSelected(null);
+    setNavTask("");
+    setNavPractice("");
+    setNavTopic("");
+    setOpenGroups({});
+    setNavOpen(false);
   };
 
   const goBack = () => setView(from === "home" ? "home" : "results");
@@ -122,8 +164,8 @@ export function PromptBank() {
     setCopied(false);
   };
 
-  const baseResults: NavPrompt[] = task ? allPrompts.filter((p) => p.task === task) : searchNavPrompts(committed);
-  const resultsHeading = task ? taskById(task)?.label ?? "" : `“${committed.trim()}”`;
+  const baseResults: NavPrompt[] = navTask ? allPrompts.filter((p) => p.task === navTask) : searchNavPrompts(committed);
+  const resultsHeading = navTask ? taskById(navTask)?.label ?? "" : `“${committed.trim()}”`;
 
   const generated = edited ?? (selected ? buildGeneratedPrompt(selected, fields) : "");
 
@@ -136,77 +178,83 @@ export function PromptBank() {
 
   return (
     <div className="app-shell">
-      <TopBar
-        query={query}
-        onQueryChange={setQuery}
-        onSearch={runSearch}
-        onGoHome={goHome}
-        promptCount={totalPromptCount}
-        practiceCount={practices.length}
-      />
-
-      {view === "home" && (
-        <HomeView
-          browseTask={browseTask}
-          browsePractice={browsePractice}
-          onTaskSelect={(value) => {
-            setBrowseTask(value as TaskId | "");
-            setOpenGroups({});
-          }}
-          onPracticeSelect={(value) => {
-            setBrowsePractice(value);
-            setOpenGroups({});
-          }}
-          onClearBrowse={() => {
-            setBrowseTask("");
-            setBrowsePractice("");
-            setOpenGroups({});
-          }}
-          recentPrompts={recentPrompts}
-          onOpenPrompt={(prompt) => openPrompt(prompt, "home")}
-          openGroups={openGroups}
-          onToggleGroup={(id, currentlyOpen) =>
-            setOpenGroups((current) => ({ ...current, [id]: !currentlyOpen }))
-          }
+      <div className="app-body">
+        <SideNav
+          selectedTask={navTask}
+          selectedPractice={navPractice}
+          selectedTopic={navTopic}
+          onSelectTask={selectNavTask}
+          onSelectPractice={selectNavPractice}
+          onSelectTopic={selectNavTopic}
+          onClearAll={clearNav}
+          onGoHome={goHome}
+          isOpen={navOpen}
+          onClose={() => setNavOpen(false)}
         />
-      )}
 
-      {view === "results" && (
-        <ResultsView
-          heading={resultsHeading}
-          baseResults={baseResults}
-          filter={filter}
-          onFilterChange={setFilter}
-          onOpenPrompt={(prompt) => openPrompt(prompt, "results")}
-          onBack={goHome}
-          backLabel="Start over"
-          query={committed}
-          onSelectLeadTask={selectLeadTask}
-        />
-      )}
+        <div className="app-content">
+          <TopBar
+            query={query}
+            onQueryChange={setQuery}
+            onSearch={runSearch}
+            onOpenNav={() => setNavOpen(true)}
+            promptCount={totalPromptCount}
+            practiceCount={practices.length}
+          />
 
-      {view === "prompt" && selected && (
-        <PromptWorkspace
-          prompt={selected}
-          fields={fields}
-          onFieldChange={updateField}
-          generatedPrompt={generated}
-          onGeneratedPromptChange={(value) => {
-            setEdited(value);
-            setCopied(false);
-          }}
-          moreOpen={moreOpen}
-          onToggleMore={() => setMoreOpen((open) => !open)}
-          baseOpen={baseOpen}
-          onToggleBase={() => setBaseOpen((open) => !open)}
-          onCopy={copyPrompt}
-          copied={copied}
-          onBack={goBack}
-          backLabel={from === "home" ? "Start over" : "Back to results"}
-        />
-      )}
+          {view === "home" && (
+            <HomeView
+              navTask={navTask}
+              navPractice={navPractice}
+              navTopic={navTopic}
+              onClearNav={clearNav}
+              recentPrompts={recentPrompts}
+              onOpenPrompt={(prompt) => openPrompt(prompt, "home")}
+              openGroups={openGroups}
+              onToggleGroup={(id, currentlyOpen) =>
+                setOpenGroups((current) => ({ ...current, [id]: !currentlyOpen }))
+              }
+            />
+          )}
 
-      <SiteFooter />
+          {view === "results" && (
+            <ResultsView
+              heading={resultsHeading}
+              baseResults={baseResults}
+              filter={filter}
+              onFilterChange={setFilter}
+              onOpenPrompt={(prompt) => openPrompt(prompt, "results")}
+              onBack={goHome}
+              backLabel="Start over"
+              query={committed}
+              onSelectLeadTask={selectLeadTask}
+            />
+          )}
+
+          {view === "prompt" && selected && (
+            <PromptWorkspace
+              prompt={selected}
+              fields={fields}
+              onFieldChange={updateField}
+              generatedPrompt={generated}
+              onGeneratedPromptChange={(value) => {
+                setEdited(value);
+                setCopied(false);
+              }}
+              moreOpen={moreOpen}
+              onToggleMore={() => setMoreOpen((open) => !open)}
+              baseOpen={baseOpen}
+              onToggleBase={() => setBaseOpen((open) => !open)}
+              onCopy={copyPrompt}
+              copied={copied}
+              onBack={goBack}
+              backLabel={from === "home" ? "Start over" : "Back to results"}
+            />
+          )}
+
+          <SiteFooter />
+        </div>
+      </div>
     </div>
   );
 }
