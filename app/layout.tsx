@@ -1,6 +1,14 @@
 import type { Metadata, Viewport } from "next";
+import { Instrument_Sans } from "next/font/google";
 import "@/styles/base.css";
 import "@/styles/app.css";
+
+const instrumentSans = Instrument_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-instrument-sans",
+  display: "swap",
+});
 
 /**
  * Absolute base for Open Graph/Twitter asset URLs.
@@ -51,7 +59,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={instrumentSans.variable}>
       <body>{children}</body>
     </html>
   );
